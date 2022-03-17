@@ -1,0 +1,67 @@
+CREATE TABLE users (
+	user_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+	first_name TEXT NOT NULL,
+	last_name TEXT NOT NULL,
+	email TEXT NOT NULL UNIQUE,
+	password TEXT NOT NULL,
+	answer1 TEXT NOT NULL,
+	answer2 TEXT NOT NULL
+);
+
+CREATE TABLE profiles (
+	profile_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+	date_of_birth TEXT,
+	height INTEGER,
+	bio TEXT,
+	list_of_groups TEXT,
+	fav_group INTEGER,
+	user_id INTEGER NOT NULL,
+	FOREIGN KEY (user_id)
+		REFERENCES users (user_id)
+		ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+CREATE TABLE goals (
+	goal_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+	set_date TEXT NOT NULL,
+	target_date TEXT NOT NULL,
+	goal_type TEXT NOT NULL,
+	param1 TEXT NOT NULL,
+	param2 TEXT NOT NULL,
+	profile_id INTEGER NOT NULL,
+	FOREIGN KEY (profile_id)
+		REFERENCES profiles (profile_id)
+		ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+CREATE TABLE exercises (
+	exercise_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+	exercise_name TEXT NOT NULL,
+	exercise_desc TEXT NOT NULL,
+	param1 TEXT NOT NULL,
+	param2 TEXT NOT NULL,
+	param3 TEXT NOT NULL
+);
+
+CREATE TABLE foods (
+	food_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+	food_name TEXT NOT NULL,
+	food_type TEXT NOT NULL,
+	calories INTEGER NOT NULL
+);
+
+CREATE TABLE user_exercise (
+	user_exercise_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+	profile_id INTEGER NOT NULL,
+	exercise_id INTEGER NOT NULL,
+	FOREIGN KEY (profile_id)
+		REFERENCES profiles (profile_id)
+		ON UPDATE NO ACTION ON DELETE NO ACTION,	
+	FOREIGN KEY (exercise_id)
+		REFERENCES exercises (exercise_id)
+		ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+INSERT INTO users (first_name,last_name,email,password,answer1,answer2) VALUES ('Mike','Baker','bakermike@hotmail.com','password','London','Dog');
+
+INSERT INTO users (first_name,last_name,email,password,answer1,answer2) VALUES ('Bill','Smith','billsmith@gmail.com','password','New York','Horse');
